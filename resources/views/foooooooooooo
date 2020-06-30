@@ -1,0 +1,75 @@
+// Ajax
+
+
+function formAjax(myForm, myMsg, insert) {
+    $(myForm).submit(function (e) { 
+        $.ajax({
+            method      :    'POST',
+            url         :    $(this).attr('action'),
+            data        :    new FormData( this ),
+            processData :    false,
+            contentType :    false,
+            success     :    function (data) {
+                                $(myMsg).fadeOut(100, function () {
+                                    $(this).html(data);
+                                }).fadeIn();
+                                insert && $(data).hasClass('alert-success') ? $( myForm + ' :input').val('') : '';
+                            }   
+            });
+        e.preventDefault();
+    });
+}
+
+formAjax('#am-form', '#show-m', true);
+formAjax('#em-form', '#show-em', false);
+
+
+function clickAjax(myButton, myMethod, myMsg, $myDo) {
+
+    $(document).on('click', myButton, function (e) {
+        var el = this;
+        if (confirm('Are You Sure?')) {
+        $.ajax({
+    
+            method  :    myMethod,
+            url     :    $(this).attr('href'),
+            success :    function (data) {
+                            alert('Member Is ' + myMsg);
+                            $(el).closest($myDo ? 'tr' : el).fadeOut(800, function () {
+                                $(this).remove();
+                            });
+                        }
+        });
+    }
+        e.preventDefault();
+    
+    });
+}
+
+clickAjax('.delete-m', 'DELETE', 'Deleted', true);
+clickAjax('.activate-m', 'POST', 'Activated', false);
+
+
+
+// Ajax
+
+$('#add_comment_submit').click(function () {
+
+    $.ajax({
+
+        method  :    'POST',
+        url     :    $('#add_comment_form').attr('action'),
+        data    :    $('#add_comment_form :input').serializeArray(),
+        success :    function (data) {
+                        $('#show_comment').html(data);
+                        $(data).is(':contains("Added")') ? $('#add_comment_form :input').val('') : ''
+                    }
+    });
+});
+
+$('#add_comment_form').submit(function (e) { 
+
+    e.preventDefault();
+    // $(this).children(':input').val('');
+
+});
