@@ -78,11 +78,20 @@
                                 </div>
                             </div>
     
-                            <div class="form-group row mb-0">
+                            <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Register') }}
                                     </button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 offset-md-4">
+                                    <a href="redirect/facebook" class="btn btn-dark">
+                                        <i class="fab fa-facebook h4"></i>
+                                        Register With Facebook
+                                    </a>
                                 </div>
                             </div>
                         </form>

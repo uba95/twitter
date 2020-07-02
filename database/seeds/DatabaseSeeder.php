@@ -1,8 +1,8 @@
 <?php
 
-use App\Like;
-use App\Tweet;
-use App\User;
+use App\Models\Like;
+use App\Models\Tweet;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

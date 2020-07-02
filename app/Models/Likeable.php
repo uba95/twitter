@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use App\Notifications\LikeNotifacation;
 use Illuminate\Database\Eloquent\Builder;

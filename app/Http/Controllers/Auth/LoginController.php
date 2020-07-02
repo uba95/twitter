@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -37,4 +38,25 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // public function username()
+    // {
+    //     $value = request()->input('identity');
+    //     $field = filter_var($value, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+    //     request()->merge([$field => $value]);
+    //     return $field;
+        
+    // }
+
+    protected function credentials(Request $request)
+{
+    $value = $request->get('email');
+
+    $field = is_numeric($value) ? 'mobile' : 'email';
+
+    return [$field => $value, 'password' => $request->get('password')];
+    
+
+}
+
 }

@@ -33,5 +33,11 @@ return [
     'nexmo' => [
         'sms_from' => '+970599388051',
     ],
+    
+    'facebook' => [
+        'client_id' => env( 'FB_CLIENT_ID' ),
+        'client_secret' => env( 'FB_CLIENT_SECRET' ),
+        'redirect' => env( 'FB_REDIRECT' ),
+    ],
 
 ];

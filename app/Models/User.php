@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -16,9 +16,11 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $fillable = [
-        'username', 'name', 'email', 'password','avatar', 'cover', 'bio'
-    ];
+    // protected $fillable = [
+    //     'username', 'name', 'email', 'password','avatar', 'cover', 'bio'
+    // ];
+
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.

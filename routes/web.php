@@ -36,21 +36,31 @@ Route::redirect('/home', '/tweets');
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route::redirect('/', '/tweets');
-    Route::get('/tweets', 'TweetController@index')->name('home');
-    Route::post('/tweets', 'TweetController@store');
-    Route::delete('/tweets/{tweet}/delete', 'TweetController@destroy')->middleware('can:delete,tweet');
-    Route::post('/tweets/{tweet}/like', 'TweetLikeController@store')->name('like');
+    Route::group(['prefix' => 'tweets'], function () {
 
-    Route::post('/profiles/{user:username}/follow', 'FollowController@store');
-    Route::get('/profiles/{user:username}/edit', 'ProfileController@edit')->middleware('can:edit,user');
-    Route::patch('/profiles/{user:username}/cover', 'CoverController');
-    Route::patch('/profiles/{user:username}', 'ProfileController@update')->middleware('can:edit,user');
-    
+        Route::get('', 'TweetController@index')->name('home');
+        Route::post('', 'TweetController@store');
+        Route::delete('{tweet}/delete', 'TweetController@destroy')->middleware('can:delete,tweet');
+        Route::post('{tweet}/like', 'TweetLikeController@store')->name('like');
+    });
+
+    Route::group(['prefix' => 'profiles'], function () {
+
+        Route::post('{user:username}/follow', 'FollowController@store');
+        Route::get('{user:username}/edit', 'ProfileController@edit')->middleware('can:edit,user');
+        Route::patch('{user:username}/cover', 'CoverController');
+        Route::patch('{user:username}', 'ProfileController@update')->middleware('can:edit,user');
+    });
+
 
     Route::get('/explore', 'ExploreController@index');
     Route::get('/notifications', 'NotificationsController');
 });
+
+
 Route::get('/profiles/{user:username}', 'ProfileController@show')->name('profile');
 Route::get('/friends/{user:username}', 'FriendController');
 
+Route::get('/redirect/{service}', 'SocialController@redirect');
+Route::get('/callback/{service}', 'SocialController@callback');
 // Auth::loginUsingId(21);

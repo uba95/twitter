@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Tweet;
+use App\Models\Tweet;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TweetController extends Controller
 {
