@@ -1,8 +1,8 @@
 <div class="border border-primary rounded-lg px-3 px-lg-4 py-3 mb-5">
 
-    <form class="publish">
+    <form class="publish" action="{{localRoute('/tweets')}}">
         @csrf
-        <textarea placeholder=" Whats's up doc?" name="body"
+        <textarea placeholder=" {{__('messages.Whats\'s up doc?')}}" name="body"
         class="w-100 rounded-lg form-control @error('body') is-invalid @enderror" rows="4"
         ></textarea>
 
@@ -23,7 +23,7 @@
                 <span class="text-primary count">255</span>
                 <span> / </span>
                 <span>255</span>
-                <button type="submit" class="btn btn-primary rounded-pill p-2 px-3 text-white tweet" disabled>Tweet</button>
+                <button type="submit" class="btn btn-primary rounded-pill p-2 px-3 text-white tweet" disabled>{{__('messages.Tweet')}}</button>
             </div>
 
 

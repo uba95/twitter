@@ -38,7 +38,8 @@ class UpdateProfile extends FormRequest
     public function messages()
     {
         return [
-            'avatar.max' => 'The avatar may not be greater than 4MB.'
+            'avatar.max' => 'The avatar may not be greater than 4MB.',
+            // 'avatar.max' => __('messages.avatar max size'),
         ];
     }
 

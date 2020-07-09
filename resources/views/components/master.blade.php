@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@php
+    $lang = str_replace('_', '-', app()->getLocale())
+@endphp
+<html lang="{{ $lang }}" dir="{{ $lang == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,8 +18,17 @@
     <script src="{{ asset('js/app.js') }}" ></script>
     {{-- <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> --}}
     {{-- <script src="http://podio.github.io/jquery-mentions-input/lib/jquery.elastic.js"></script> --}}
+    <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
 
 <script>
+
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('1853c172efa24b620d3e', {
+  cluster: 'mt1'
+});
+
+
         $(function () {
         $('[data-toggle="tooltip"]').tooltip();
 
@@ -45,8 +57,9 @@ function like(myForm, liked) {
 $(document).on('submit', myForm, function (event) { 
 event.preventDefault();
 var id = $(this).data('id');
+var route = $(this).attr('action');
 $.ajax({
-    url         :       '/tweets/'+id+'/like',
+    url         :       route,
     type        :       "POST",
     data        :       {"_token": "{{ csrf_token() }}", "liked": liked},
     success     :       function(data) {
@@ -68,13 +81,14 @@ var msg = $(el).children().text().trim();
 var user = $(this).data('user');
 var mystyle = $('.style', this);
 var style = mystyle.attr('style');
+var route = $(this).attr('action');
 
 var toast = $('.toasts .toast:last-child');
 var toasts = $('.toasts');
 var append = '<div class="toast bg-dark" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000"> <div class="toast-header"> <strong class="mr-auto">Twitter</strong> <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div> <div class="toast-body text-light"><span class="msg">You Started Following</span><strong class="username">username</strong> </div> </div>';
 
 $.ajax({
-    url         :       '/profiles/'+user+'/follow',
+    url         :       route,
     type        :       "POST",
     data        :       {"_token": "{{ csrf_token() }}", "style" : style},
     success     :       function(data) {
@@ -108,8 +122,9 @@ if (confirm('Are You Sure?')) {
 
 $(document).on('submit', '.publish', function (event) { 
 event.preventDefault();
+var route = $(this).attr('action');
 $.ajax({
-    url         :       '/tweets',
+    url         :       route,
     type        :       "POST",
     data        :       $(this).serializeArray(),
     success     :       function (data) {
@@ -141,6 +156,12 @@ $.ajax({
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @php
+    echo $lang == 'ar' ? 
+    '<link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+    integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+    ' : '';
+    @endphp
 
 </head>
 <body>
@@ -149,10 +170,21 @@ $.ajax({
         <section class="py-1 mb-3">
 
             <main class="container mx-auto p-0">
-                <header class="d-none d-xl-block p-0">
+                <header class="d-none d-xl-flex p-0 align-items-center justify-content-between">
                     <a href="/home">
                         <img src="/images/logo.svg" alt="Twitter" height="65">
                     </a>
+
+                    <div class="d-flex">
+                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                            <div class="p-1 h6">
+                                <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                    {{ $properties['native'] }}
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                    
                 </header>
                 
                 <nav class="navbar navbar-expand-xl navbar-light bg-light d-xl-none px-2 px-sm-0">

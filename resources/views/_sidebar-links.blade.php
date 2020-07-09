@@ -1,27 +1,27 @@
 <ul class="list-unstyled d-none d-lg-block rounded-lg p-lg-2 w-100"
 style="background-color:#cfeaf5; height: fit-content;}">
-    <li><a href="/home" class="font-weight-bold h5 mb-4 mt-2 text-decoration-none text-body d-block">
+    <li><a href="/home" class="font-weight-bold h6 mb-4 mt-2 text-decoration-none text-body d-block">
         <i class="fas fa-home fa-fw mr-1"></i>
-        Home</a></li>
-    <li><a href="/explore" class="font-weight-bold h5 mb-4 text-decoration-none text-body d-block">
+        {{__('messages.Home')}}</a></li>
+    <li><a href="/explore" class="font-weight-bold h6 mb-4 text-decoration-none text-body d-block">
         <i class="fas fa-hashtag fa-fw mr-1"></i>
-        Explore</a></li>
-    <li><a href="/notifications" class="font-weight-bold h5 mb-4 text-decoration-none text-body d-block">
+        {{__('messages.Explore')}}</a></li>
+    <li><a href="/notifications" class="font-weight-bold h6 mb-4 text-decoration-none text-body d-block">
         <i class="fas fa-bell fa-fw mr-1"></i>
-        Notifications</a></li>
+        {{__('messages.Notifications')}}</a></li>
     <li>
-        <a href="{{ route('profile', auth()->user()) }}" class="font-weight-bold h5 mb-4 text-decoration-none text-body d-block">
+        <a href="{{ route('profile', auth()->user()) }}" class="font-weight-bold h6 mb-4 text-decoration-none text-body d-block">
             <i class="fas fa-user fa-fw mr-1"></i>
-            Profile</a></li>
+            {{__('messages.Profile')}}</a></li>
 
     <div class="dropdown-divider" style="border-color:#999;"></div>
 
     <li>
-        <form action="/logout" method="POST">
+        <form action="{{localRoute('/logout')}}" method="POST">
             @csrf
-            <button type="submit" class="btn p-0 font-weight-bold mb-4 text-decoration-none text-body" style="font-size: 1.125rem">
+            <button type="submit" class="btn p-0 font-weight-bold mb-4 text-decoration-none text-body" style="font-size: 1rem">
                 <i class="fas fa-sign-out-alt fa-fw mr-1"></i>
-                Logout</button>
+                {{__('messages.Logout')}}</button>
         </form>
     </li>
 
@@ -44,7 +44,7 @@ style="background-color:#cfeaf5; height: fit-content;}">
     <div class="dropdown-divider" style="border-color:#999;"></div>
 
     <li class="nav-item">
-        <form action="/logout" method="POST" class="nav-link">
+        <form action="{{localRoute('/logout')}} " method="POST" class="nav-link">
             @csrf
             <button type="submit" class="btn p-0 mb-1 text-decoration-none text-dark">
                 <i class="fas fa-sign-out-alt fa-fw mr-1"></i>

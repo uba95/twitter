@@ -1,5 +1,5 @@
 <div class="mb-4 rounded-lg p-3" style="background-color:#cfeaf5">
-    <h4 class="font-weight-bold mb-4">Following</h4>
+    <h4 class="font-weight-bold mb-4">{{__('messages.Following')}}</h4>
     <ul class="list-unstyled">
         @forelse ($fUser->follows->sortByDesc('created_at')->take(5) as $user)
             <li class="mb-3">
@@ -30,14 +30,14 @@
             </li>
             @empty
         
-            <div class="text-muted">No Following Yet.</div>
+            <div class="text-muted">{{__('messages.No Following Yet.')}}</div>
     
         @endforelse
         </ul>
 </div>
 
 <div class="mb-4 rounded-lg p-3" style="background-color:#cfeaf5">
-    <h4 class="font-weight-bold mb-4">Followers</h4>
+    <h4 class="font-weight-bold mb-4">{{__('messages.Followers')}}</h4>
     <ul class="list-unstyled">
         @forelse ($fUser->followers->sortByDesc('created_at')->take(5) as $user)
             <li class="mb-3">
@@ -69,7 +69,7 @@
             </li>
             @empty
         
-            <div class="text-muted">No Followers Yet.</div>
+            <div class="text-muted">{{__('messages.No Followers Yet.')}}</div>
     
         @endforelse
         </ul>

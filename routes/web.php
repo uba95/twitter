@@ -9,6 +9,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,47 +21,54 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(['verify' => true]);
-// Route::get('/logout', 'Auth\LoginController@logout');
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function() { 
 
-Route::get('/', function() {
-    if (Auth::check()) {
-        return redirect('/tweets');   
-    } else {
-        return view('welcome');
-    }
-});  
-// Route::get('/', 'WelcomeController');
-Route::redirect('/home', '/tweets');
+        Auth::routes(['verify' => true]);
+        // Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/', function() {
 
-    // Route::redirect('/', '/tweets');
-    Route::group(['prefix' => 'tweets'], function () {
+            return Auth::check() ? redirect('/tweets') : view('welcome');
+        });  
+        // Route::get('/', 'WelcomeController');
+        Route::redirect('/home', '/tweets');
 
-        Route::get('', 'TweetController@index')->name('home');
-        Route::post('', 'TweetController@store');
-        Route::delete('{tweet}/delete', 'TweetController@destroy')->middleware('can:delete,tweet');
-        Route::post('{tweet}/like', 'TweetLikeController@store')->name('like');
-    });
+        Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::group(['prefix' => 'profiles'], function () {
+            // Route::redirect('/', '/tweets');
+            Route::group(['prefix' => 'tweets'], function () {
 
-        Route::post('{user:username}/follow', 'FollowController@store');
-        Route::get('{user:username}/edit', 'ProfileController@edit')->middleware('can:edit,user');
-        Route::patch('{user:username}/cover', 'CoverController');
-        Route::patch('{user:username}', 'ProfileController@update')->middleware('can:edit,user');
-    });
+                Route::get('', 'TweetController@index')->name('home');
+                Route::post('', 'TweetController@store');
+                Route::delete('{tweet}/delete', 'TweetController@destroy')->middleware('can:delete,tweet');
+                Route::post('{tweet}/like', 'TweetLikeController@store')->name('like');
+            });
+            // Route::resource('tweets', 'TweetController')->only(['index', 'store', 'destroy']);
+
+            Route::group(['prefix' => 'profiles'], function () {
+
+                Route::post('{user:username}/follow', 'FollowController@store')->name('follow');
+                Route::get('{user:username}/edit', 'ProfileController@edit')->middleware('can:edit,user');
+                Route::patch('{user:username}/cover', 'CoverController');
+                Route::patch('{user:username}', 'ProfileController@update')->middleware('can:edit,user');
+            });
 
 
-    Route::get('/explore', 'ExploreController@index');
-    Route::get('/notifications', 'NotificationsController');
+            Route::get('/explore', 'ExploreController@index');
+            Route::get('/notifications', 'NotificationsController');
+        });
+
+
+        Route::get('/profiles/{user:username}', 'ProfileController@show')->name('profile');
+        Route::get('/friends/{user:username}', 'FriendController');
+
+        Route::get('/redirect/{service}', 'SocialController@redirect');
+        Route::get('/callback/{service}', 'SocialController@callback');
+        // Auth::loginUsingId(21);
+
+
 });
-
-
-Route::get('/profiles/{user:username}', 'ProfileController@show')->name('profile');
-Route::get('/friends/{user:username}', 'FriendController');
-
-Route::get('/redirect/{service}', 'SocialController@redirect');
-Route::get('/callback/{service}', 'SocialController@callback');
-// Auth::loginUsingId(21);

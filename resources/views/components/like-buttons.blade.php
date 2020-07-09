@@ -1,7 +1,7 @@
     <div class="mt-2 h5 d-flex border p-2 rounded-lg align-items-center" 
     style="color:#666;background-color:#eee" >
 
-        <form  class="like" data-id="{{ $tweet->id }}">
+        <form  class="like" data-id="{{ $tweet->id }}" action="{{localRoute(route('like', $tweet->id))}}">
             @csrf 
             <div class="mr-4">
                 <button class="btn btn-lg" type="submit">
@@ -15,7 +15,7 @@
             </div>
         </form>
 
-        <form class="dislike" data-id="{{ $tweet->id }}">
+        <form class="dislike" data-id="{{ $tweet->id }}" action="{{localRoute(route('like', $tweet->id))}}">
             @csrf
             <div class="mr-4">
                 <button class="btn btn-lg" type="submit">

@@ -3,7 +3,7 @@
 
     {{-- <form action="{{ route('profile', $user->username) }}/follow" method="POST"> --}}
     
-    <form data-user="{{ $user->username }}" 
+    <form data-user="{{ $user->username }}" action="{{localRoute(route('follow', $user->username))}}"
         class="follow" >
         @csrf
         {{$slot?? ''}}

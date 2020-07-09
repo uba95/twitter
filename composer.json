@@ -16,6 +16,7 @@
         "laravel/nexmo-notification-channel": "^2.3",
         "laravel/socialite": "^4.4",
         "laravel/tinker": "^2.0",
+        "mcamara/laravel-localization": "^1.5",
         "renatomarinho/laravel-page-speed": "^1.8"
     },
     "require-dev": {
