@@ -14,43 +14,43 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(App\User::class, 20)->create();
+        $users = factory(User::class, 20)->create();
 
         $users->each(function (User $user) {
             
-            $tweets = factory(App\Tweet::class, rand(3, 6))->create(['user_id' => $user->id]);
+            $tweets = factory(Tweet::class, rand(3, 6))->create(['user_id' => $user->id]);
 
         });
 
+
+        $u_ids = User::all()->pluck('id')->all();
+        $t_ids = Tweet::all()->pluck('id')->all();
+
         for ($i=1;$i<100;$i++) {
 
-            $u_ids = User::all()->pluck('id');
-            $u_id1 = $u_ids[array_rand($u_ids->all())];
-            $u_id2 = $u_ids[array_rand($u_ids->all())];
+            $u_id1 = $u_ids[array_rand($u_ids)];
+            $u_id2 = $u_ids[array_rand($u_ids)];
             $user1 = User::find($u_id1);
             $user2 = User::find($u_id2);
-            $user1->follow($user2);
-        }
 
-        $follows =  DB::table('follows')->groupBy('user_id', 'following_user_id')->get();
-        $ids = array_column($follows ->toArray(), 'id');
-        Like::whereNotIn('id', $ids )->delete();
+            if ($u_id1 != $u_id2 && !$user1->isFollowing($user2)) {
+
+                $user1->follow($user2);
+            }
+        }
 
         for ($i=1;$i<1000;$i++) {
 
-            $u_ids = User::all()->pluck('id')->all();
             $u_id = $u_ids[array_rand($u_ids)];
-
-            $t_ids = Tweet::all()->pluck('id')->all();
             $t_id = $t_ids[array_rand($t_ids)];
+            $user = User::find($u_id);
+            $tweet = Tweet::find($t_id);
 
-            factory(App\Like::class)->create(['user_id' => $u_id, 'tweet_id' =>  $t_id]);
+            if (!$tweet->isLikedBy($user) && !$tweet->isDisLikedBy($user)) {
+                factory(Like::class)->create(['user_id' => $u_id, 'tweet_id' =>  $t_id]);
+            }
 
         }
-        
-        $likes = Like::groupBy('user_id', 'tweet_id')->get();
-        $ids = array_column($likes ->toArray(), 'id');
-        Like::whereNotIn('id', $ids )->delete();
 
     }
     
@@ -91,3 +91,9 @@ class DatabaseSeeder extends Seeder
 //     $u_id = User::find($u_ids[0]);
 //     $user->follow($u_id);
 // }
+// $likes = Like::groupBy('user_id', 'tweet_id')->get();
+// $ids = array_column($likes ->toArray(), 'id');
+// Like::whereNotIn('id', $ids )->delete();
+// $follows =  DB::table('follows')->groupBy('user_id', 'following_user_id')->get();
+// $ids = array_column($follows ->toArray(), 'id');
+// Like::whereNotIn('id', $ids )->delete();

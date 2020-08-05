@@ -18,8 +18,8 @@
         style="{{$style ?? 'width:calc(1.5vw + 70px);height:calc(0.8vw + 30px);font-size:0.9rem'}}"
         >
             {{ current_user()->isFollowing($user) ?
-            'Unfollow' :
-            'Follow' }}
+             __('messages.Unfollow') :
+             __('messages.Follow') }}
         </button>
     </form>
     

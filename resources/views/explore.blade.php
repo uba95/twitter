@@ -1,6 +1,5 @@
 <x-app>
-@include('friends-box')
-<h3 class="mb-3">Find People To Follow!</h3>
+<h3 class="mb-3">{{__('messages.Find People To Follow!')}}</h3>
 <div class="border border-bottom-0 mb-5">
     <div class="infinite-scroll">
         @foreach ($users as $user)

@@ -1,5 +1,5 @@
 <x-master>
-    <section class="">
+    <section>
         <main class="container mx-auto p-0" >
             <div class=" d-lg-flex justify-content-between">
 
@@ -16,7 +16,16 @@
                     
                 @if (auth()->check())
                     <div class="col col-lg-4 col-xl-3 px-0 d-none d-lg-flex flex-column">
-                        {{ $friends }}
+
+                        @if (Route::currentRouteName() === 'profile')
+
+                            {{ $friends }}
+                        @else
+
+                            @include('_friends-list', ['fUser' => current_user()])
+                        @endif
+
+                        
                     </div>
                 @endif
                 {{ $toast ?? ''  }}

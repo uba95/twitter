@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Events\LikeEvent;
 use App\Notifications\LikeNotifacation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
@@ -20,7 +21,12 @@ trait Likeable {
 
         } else {
 
-            $liked? $this->user->notify(new LikeNotifacation($user)) : '';
+            if ($liked) {
+                
+                $this->user->notify(new LikeNotifacation($user));
+                LikeEvent::dispatch($this->user);
+
+            } 
             $user_id = $user ? $user->id : auth()->id();
             return $this->likes()->where('user_id', $user->id)->updateOrCreate(compact('user_id'), compact('liked'));
         }

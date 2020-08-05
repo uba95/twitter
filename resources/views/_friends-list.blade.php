@@ -1,14 +1,14 @@
-<div class="mb-4 rounded-lg p-3" style="background-color:#cfeaf5">
+<div class="mb-4 rounded-lg p-2" style="background-color:#cfeaf5">
     <h4 class="font-weight-bold mb-4">{{__('messages.Following')}}</h4>
     <ul class="list-unstyled">
         @forelse ($fUser->follows->sortByDesc('created_at')->take(5) as $user)
             <li class="mb-3">
-                <div class="row align-items-center">
+                <div class="row align-items-center mx-0">
                     <a href="{{ route('profile', $user) }}"
                         class="text-decoration-none text-dark col-lg-2"> 
                         
                         {{-- <img src="{{ $user->avatar }}" alt="" class="rounded-circle mr-2 " width="40" height="40"> --}}
-                        <div class="rounded-circle mr-2"
+                        <div class="rounded-circle "
                         style="width:40px; height:40px;background-image: url({{ $user->avatar }});
                         background-size: cover;">
                             {{-- avatar_img --}}
@@ -36,7 +36,7 @@
         </ul>
 </div>
 
-<div class="mb-4 rounded-lg p-3" style="background-color:#cfeaf5">
+<div class="mb-4 rounded-lg p-2" style="background-color:#cfeaf5">
     <h4 class="font-weight-bold mb-4">{{__('messages.Followers')}}</h4>
     <ul class="list-unstyled">
         @forelse ($fUser->followers->sortByDesc('created_at')->take(5) as $user)
@@ -46,7 +46,7 @@
                         class="text-decoration-none text-dark col-lg-2"> 
                         
                         {{-- <img src="{{ $user->avatar }}" alt="" class="rounded-circle mr-2" width="40" height="40"> --}}
-                        <div class="rounded-circle mr-2"
+                        <div class="rounded-circle mx-2"
                         style="width:40px; height:40px;background-image: url({{ $user->avatar }});
                         background-size: cover;">
                             {{-- avatar_img --}}

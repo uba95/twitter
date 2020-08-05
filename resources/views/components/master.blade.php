@@ -19,15 +19,10 @@
     {{-- <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> --}}
     {{-- <script src="http://podio.github.io/jquery-mentions-input/lib/jquery.elastic.js"></script> --}}
     <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 
 <script>
-
-Pusher.logToConsole = true;
-
-var pusher = new Pusher('1853c172efa24b620d3e', {
-  cluster: 'mt1'
-});
-
 
         $(function () {
         $('[data-toggle="tooltip"]').tooltip();
@@ -53,6 +48,21 @@ var pusher = new Pusher('1853c172efa24b620d3e', {
         });
         
     // Ajax
+// function like(myForm, liked) {
+// $(document).on('submit', myForm, function (event) { 
+// event.preventDefault();
+// var id = $(this).data('id');
+// var route = $(this).attr('action');
+// axios({
+//     url         :       route,
+//     method        :       "POST",
+//     data        :       {"_token": "{{ csrf_token() }}", "liked": liked},
+//     }).then(function (response) {
+//         $('#l-' + id).html(response.data.html);
+//     });
+// });
+// }
+
 function like(myForm, liked) {
 $(document).on('submit', myForm, function (event) { 
 event.preventDefault();
@@ -62,9 +72,8 @@ $.ajax({
     url         :       route,
     type        :       "POST",
     data        :       {"_token": "{{ csrf_token() }}", "liked": liked},
-    success     :       function(data) {
-                            $('#l-' + id).html(data.html);
-                        }
+    }).done(function (data) {
+        $('#l-' + id).html(data.html);
     });
 });
 }
@@ -162,7 +171,9 @@ $.ajax({
     integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
     ' : '';
     @endphp
-
+    <style>
+        textarea{resize: none}
+    </style>
 </head>
 <body>
     <div id="app">
@@ -204,6 +215,24 @@ $.ajax({
     
         {{ $slot }}
     </div>
+<script>
+
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('1853c172efa24b620d3e', {encrypted: false});
+
+var channel = pusher.subscribe('like-event');
+
+channel.bind('App\\Events\\LikeEvent', function (data) {
+
+    var notificationsCountElem = $(`*[data-count='${data.id}']`);
+    
+    notificationsCountElem.text(data.count);
+    notificationsCountElem.text() == 0 ? '' :  notificationsCountElem.show();
+
+});
+
+</script>
 
 </body>
 </html>

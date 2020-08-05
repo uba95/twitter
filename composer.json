@@ -17,11 +17,9 @@
         "laravel/socialite": "^4.4",
         "laravel/tinker": "^2.0",
         "mcamara/laravel-localization": "^1.5",
-        "renatomarinho/laravel-page-speed": "^1.8"
+        "pusher/pusher-php-server": "^4.1"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.3",
-        "barryvdh/laravel-ide-helper": "^2.6",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
         "laravel/ui": "^2.0",

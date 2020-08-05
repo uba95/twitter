@@ -88,7 +88,7 @@
                             <hr>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <a href="redirect/facebook" class="btn btn-dark">
+                                    <a href="redirect/facebook" class="btn text-light" style="background: #5673a9">
                                         <i class="fab fa-facebook h4"></i>
                                         Register With Facebook
                                     </a>

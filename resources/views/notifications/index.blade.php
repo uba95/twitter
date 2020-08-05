@@ -1,5 +1,4 @@
 <x-app>
-    @include('friends-box')
     <div>
 
         <div class="mb-5">

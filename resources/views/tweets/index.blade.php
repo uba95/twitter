@@ -4,5 +4,4 @@
     <div class="timeline">
         @include('_timeline')
     </div>
-    @include('friends-box')
 </x-app>

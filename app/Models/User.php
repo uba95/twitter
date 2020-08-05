@@ -72,6 +72,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
         // return 'https://i.pravatar.cc/40?u=' . $this->id;
 
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            return $value;
+        }
         return asset($value ? 'storage/'. $value : '/images/default-user-profile.png');
     }
 

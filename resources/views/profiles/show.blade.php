@@ -1,7 +1,9 @@
 <x-app>
-
-    @include('friends-box')
-
+    
+    <x-slot name="friends">
+        @include('_friends-list', ['fUser' => $user])
+    </x-slot>
+        
     <header class="mb-3">
             
         <div class="position-relative">
@@ -50,14 +52,14 @@
             <div>
                 {{-- <h4 class="font-weight-bold mb-0 mt-0 d-none d-sm-inline">{{ $user->name }}</h4>
                 <div class="small text-muted d-none d-sm-inline">{{ '@' . $user->username }}</div> --}}
-                <div class="small text-muted">Joined {{ $user->created_at->diffForHumans() }}</div>
+                <div class="small text-muted">{{__('messages.Joined')}} {{ $user->created_at->diffForHumans() }}</div>
             </div>
 
             <div class="">
 
             @can('edit', $user)
                 <a href="{{ route('profile', current_user()) }}/edit" class="btn btn-outline-primary rounded-pill p-sm-2 mb-sm-0">
-                    Edit Profile
+                    {{__('messages.Edit Profile')}}
                 </a>
             @endcan
             <x-follow-button :user="$user"></x-follow-button>

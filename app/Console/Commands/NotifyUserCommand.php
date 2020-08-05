@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendMailJob;
 use Mail;
 use App\Models\User;
 use App\Mail\NotifyEmail;
@@ -40,13 +41,18 @@ class NotifyUserCommand extends Command
      */
     public function handle()
     {
-        $emails = User::pluck('email')->take(2)->all();
-        $data = ['sub' => 'notify', 'prog' => 'php'];
-        
-        foreach ($emails as $email) {
+        // $emails = User::pluck('email')->take(2)->all();
+        $emails = User::chunk(10, function ($data) {
 
-            Mail::to($email)->send(new NotifyEmail($data));
-        }
+            dispatch(new SendMailJob($data));
+        });
+        return 'my message';
+        // $data = ['sub' => 'notify', 'prog' => 'php'];
+        
+        // foreach ($emails as $email) {
+
+        //     Mail::to($email)->send(new NotifyEmail($data));
+        // }
 
     }
 }

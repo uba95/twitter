@@ -7,7 +7,7 @@
             @include('_tweet')
         @empty
 
-            <div class="text-muted p-2">No Tweets Yet.</div>
+            <div class="text-muted p-2">{{__('messages.No Tweets Yet.')}}</div>
 
         @endforelse
 

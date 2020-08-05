@@ -1,4 +1,4 @@
-<ul class="list-unstyled d-none d-lg-block rounded-lg p-lg-2 w-100"
+<ul class="list-unstyled d-none d-xl-block rounded-lg p-lg-2 w-100"
 style="background-color:#cfeaf5; height: fit-content;}">
     <li><a href="/home" class="font-weight-bold h6 mb-4 mt-2 text-decoration-none text-body d-block">
         <i class="fas fa-home fa-fw mr-1"></i>
@@ -6,9 +6,13 @@ style="background-color:#cfeaf5; height: fit-content;}">
     <li><a href="/explore" class="font-weight-bold h6 mb-4 text-decoration-none text-body d-block">
         <i class="fas fa-hashtag fa-fw mr-1"></i>
         {{__('messages.Explore')}}</a></li>
-    <li><a href="/notifications" class="font-weight-bold h6 mb-4 text-decoration-none text-body d-block">
+    <li><a href="/notifications" class=" font-weight-bold h6 mb-4 text-decoration-none text-body d-block">
         <i class="fas fa-bell fa-fw mr-1"></i>
-        {{__('messages.Notifications')}}</a></li>
+        {{__('messages.Notifications')}}
+
+        <span class="badge badge-danger ml-1 not_count" data-count="{{ current_user()->id }}">{{current_user()->unreadNotifications->count()}}</span>
+        <script>$('ul li .not_count').text() == 0 ? $('ul li .not_count').hide() :  ''</script>
+    </a></li>
     <li>
         <a href="{{ route('profile', auth()->user()) }}" class="font-weight-bold h6 mb-4 text-decoration-none text-body d-block">
             <i class="fas fa-user fa-fw mr-1"></i>
@@ -27,19 +31,23 @@ style="background-color:#cfeaf5; height: fit-content;}">
 
 </ul>
 
-<ul class="navbar-nav mr-auto d-lg-none px-2">
+<ul class="navbar-nav mr-auto d-xl-none px-2">
     <li class="nav-item"><a href="/home" class=" nav-link mb-1 text-decoration-none text-dark">
         <i class="fas fa-home fa-fw mr-1"></i>
-        Home</a></li>
+        {{__('messages.Home')}}</a></li>
     <li class="nav-item"><a href="/explore" class=" nav-link mb-1 text-decoration-none text-dark">
         <i class="fas fa-hashtag fa-fw mr-1"></i>
-        Explore</a></li>
+        {{__('messages.Explore')}}</a></li>
     <li class="nav-item"><a href="/notifications" class=" nav-link mb-1 text-decoration-none text-dark">
         <i class="fas fa-bell fa-fw mr-1"></i>
-        Notifications</a></li>
+        {{__('messages.Notifications')}}
+
+        <span class="badge badge-danger ml-1 not_count" data-count="{{ current_user()->id }}">{{current_user()->unreadNotifications->count()}}</span>
+        <script>$('ul li .not_count').text() == 0 ? $('ul li .not_count').hide() :  ''</script>
+        </a></li>
     <li class="nav-item"><a href="{{ route('profile', auth()->user()) }}" class=" nav-link mb-1 text-decoration-none text-dark">
         <i class="fas fa-user fa-fw mr-1"></i>
-        Profile</a></li>
+        {{__('messages.Profile')}}</a></li>
     
     <div class="dropdown-divider" style="border-color:#999;"></div>
 
@@ -48,7 +56,7 @@ style="background-color:#cfeaf5; height: fit-content;}">
             @csrf
             <button type="submit" class="btn p-0 mb-1 text-decoration-none text-dark">
                 <i class="fas fa-sign-out-alt fa-fw mr-1"></i>
-                Logout</button>
+                {{__('messages.Logout')}}</button>
         </form>
     </li>
     
