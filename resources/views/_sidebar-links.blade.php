@@ -51,13 +51,23 @@ style="background-color:#cfeaf5; height: fit-content;}">
     
     <div class="dropdown-divider" style="border-color:#999;"></div>
 
-    <li class="nav-item">
+    <li class="nav-item d-flex justify-content-between">
         <form action="{{localRoute('/logout')}} " method="POST" class="nav-link">
             @csrf
             <button type="submit" class="btn p-0 mb-1 text-decoration-none text-dark">
                 <i class="fas fa-sign-out-alt fa-fw mr-1"></i>
-                {{__('messages.Logout')}}</button>
+                {{__('messages.Logout')}}
+            </button>
         </form>
+        <div class="d-flex">
+            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                <div class="p-1 h6">
+                    <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                        {{ $properties['native'] }}
+                    </a>
+                </div>
+            @endforeach
+        </div>
     </li>
     
 </ul>

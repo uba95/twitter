@@ -9,15 +9,18 @@
     </a>
     <div class="media-body">
         <div class="font-weight-bold">
-            <a href="{{ route('profile', $tweet->user) }}"class="text-decoration-none text-dark"> 
-                {{ $tweet->user->name }}
-            </a>
-            <span class="small text-muted ml-1"> {{ '@'. $tweet->user->username }}</span>
+            <div style="display: flex;align-items:center">
+                <a href="{{ route('profile', $tweet->user) }}"class="text-decoration-none text-dark"> 
+                    {{ $tweet->user->name }}
+                </a>
+                <span class="small text-muted ml-1" style="text-align: -webkit-auto;" dir="auto"> {{ '@'. $tweet->user->username }}</span>
+    
+            </div>
             <div class="small text-muted ">{{$tweet->tweetDate() }}</div>
 
         </div>
 
-        <div class="mt-2" style="word-break: break-all">
+        <div class="mt-2" style="word-break: break-all;text-align: -webkit-auto;" dir="auto">
             {{ $tweet->body }}
         </div>
         <div id="l-{{ $tweet->id }}">

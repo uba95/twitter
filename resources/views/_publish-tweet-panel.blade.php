@@ -2,7 +2,7 @@
 
     <form class="publish" action="{{localRoute('/tweets')}}">
         @csrf
-        <textarea placeholder=" {{__('messages.Whats\'s up doc?')}}" name="body"
+        <textarea placeholder="{{__('messages.Whats\'s up doc?')}}" name="body" dir=auto
         class="w-100 rounded-lg form-control @error('body') is-invalid @enderror" rows="4"
         ></textarea>
 

@@ -44,7 +44,7 @@ Route::group(
 
                 Route::get('', 'TweetController@index')->name('home');
                 Route::post('', 'TweetController@store');
-                Route::delete('{tweet}/delete', 'TweetController@destroy')->middleware('can:delete,tweet');
+                Route::delete('{tweet}/delete', 'TweetController@destroy')->middleware('can:delete,tweet')->name('tweet.delete');
                 Route::post('{tweet}/like', 'TweetLikeController@store')->name('like');
             });
             // Route::resource('tweets', 'TweetController')->only(['index', 'store', 'destroy']);

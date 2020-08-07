@@ -9,10 +9,10 @@ class FollowController extends Controller
 {
     public function store(User $user, Request $request) {
 
-        $style = $request['style'];
+        $styleClass = $request['styleClass'];
         $username = $user->name;
         auth()->user()->toggleFollow($user);
-        $html = view('components.follow-button', compact('user', 'style'))->render();
+        $html = view('components.follow-button', compact('user', 'styleClass'))->render();
         return response()->json(compact('html', 'username'));
     }
 }

@@ -12,8 +12,8 @@
                 {{-- cover_img --}}
             </div>
 
-
-            @if (current_user()->is($user))
+            @auth
+                @if (current_user()->is($user))
                 <form action="{{ route('profile', current_user()) }}/cover" method="POST" enctype="multipart/form-data"
                 class="position-absolute" style="top:1%; right:1%">
                     @csrf @method('PATCH')
@@ -31,8 +31,8 @@
                 <script type="text/javascript">
                     $('.cover').change(function () { $(this).parent().submit(); });
                 </script>
-            @endif        
-
+                @endif        
+            @endauth
 
             <div class="rounded-circle position-absolute border"
             style="width:calc(6vw + 45px); height:calc(6vw + 45px); left:50%; bottom:0;
@@ -67,8 +67,8 @@
 
         </div>
         <h4 class="font-weight-bold mb-0 mt-md-3 text-center">{{ $user->name }}</h4>
-        <div class=" text-muted text-center">{{ '@' . $user->username }}</div>
-        <div class=" mb-4 mt-2 mt-lg-3 mt-xl-4 p-2 rounded-lg" style="background-color:#cfeaf5">
+        <div class=" text-muted text-center" style="text-align: -webkit-auto;" dir="auto">{{ '@' . $user->username }}</div>
+        <div class=" mb-4 mt-2 mt-lg-3 mt-xl-4 p-2 rounded-lg" style="background-color:#cfeaf5;word-break: break-all;text-align: -webkit-auto;" dir="auto">
             {{$user->bio}}
         </div>
     

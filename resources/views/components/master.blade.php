@@ -1,6 +1,6 @@
 <!doctype html>
 @php
-    $lang = str_replace('_', '-', app()->getLocale())
+    $lang = str_replace('_', '-', app()->getLocale());
 @endphp
 <html lang="{{ $lang }}" dir="{{ $lang == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
@@ -86,11 +86,9 @@ like('.dislike', false);
 $(document).on('submit', '.follow', function (event) { 
 event.preventDefault();
 var el = this;
-var msg = $(el).children().text().trim();
-var user = $(this).data('user');
-var mystyle = $('.style', this);
-var style = mystyle.attr('style');
+var style = $(el).children('button').hasClass('style') ? 'style' : '';
 var route = $(this).attr('action');
+var msg = $(el).children().text().trim();
 
 var toast = $('.toasts .toast:last-child');
 var toasts = $('.toasts');
@@ -99,9 +97,9 @@ var append = '<div class="toast bg-dark" role="alert" aria-live="assertive" aria
 $.ajax({
     url         :       route,
     type        :       "POST",
-    data        :       {"_token": "{{ csrf_token() }}", "style" : style},
+    data        :       {"_token": "{{ csrf_token() }}", "styleClass" : style},
     success     :       function(data) {
-                            $(el).html(data.html).append(mystyle);
+                            $(el).html(data.html);
                             toast.find('.username').html(' '+ data.username);      
                             msg === 'Unfollow' ? toast.find('.msg').html('You Unfollowed') : '';                            
                             toast.toast('show');
@@ -113,10 +111,11 @@ $.ajax({
 $(document).on('submit', '.delete-tweet', function (event) { 
 event.preventDefault();
 var el = this;
+var route = $(this).attr('action');
 var tweet = $(this).data('id');
 if (confirm('Are You Sure?')) {
     $.ajax({
-    url         :       '/tweets/'+tweet+'/delete',
+    url         :       route,
     type        :       "DELETE",
     data        :       {"_token": "{{ csrf_token() }}"},
     success     :       function(data) {        
@@ -128,6 +127,7 @@ if (confirm('Are You Sure?')) {
     });
 }
 });
+
 
 $(document).on('submit', '.publish', function (event) { 
 event.preventDefault();
@@ -165,14 +165,26 @@ $.ajax({
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @php
-    echo $lang == 'ar' ? 
-    '<link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
-    integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
-    ' : '';
-    @endphp
+    
+    
+    @if ($lang == 'ar')
+        <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+        integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+        <style>
+            input[type="text"]::-webkit-input-placeholder {text-align: right}
+            textarea::-webkit-input-placeholder {text-align: right}
+            @media (max-width: 767.98px) {
+                .btn {padding: 0.25rem 0.5rem;font-size: 0.9rem;line-height: 1.5;border-radius: 0.2rem;}
+            }
+            body{font-size: 0.9rem;line-height: 1.6;}
+        </style>
+    @endif
+
     <style>
+        @media (max-width: 767.98px) {.btn {font-size: 0.9rem}}
         textarea{resize: none}
+        .style{width:calc(0.5vw + 70px);height:calc(0.1vw + 30px);font-size:0.8rem}
+        .style-b{width:calc(1.5vw + 70px);height:calc(0.8vw + 30px);font-size:0.9rem}
     </style>
 </head>
 <body>
