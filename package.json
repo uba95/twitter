@@ -28,6 +28,8 @@
         "@fortawesome/fontawesome-free": "^5.13.0",
         "flatted": "^3.0.2",
         "jscroll": "^2.4.1",
+        "laravel-echo": "^1.8.1",
+        "pusher-js": "^7.0.0",
         "turbolinks": "^5.2.0",
         "twitter-text": "^3.1.0"
     }

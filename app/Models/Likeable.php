@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Events\LikeEvent;
+use App\Jobs\LikeNotifacationJob;
 use App\Notifications\LikeNotifacation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
@@ -23,9 +24,8 @@ trait Likeable {
 
             if ($liked) {
                 
-                $this->user->notify(new LikeNotifacation($user));
-                LikeEvent::dispatch($this->user);
-
+                // from $user to $this->user 
+                LikeNotifacationJob::dispatch($this->user);
             } 
             $user_id = $user ? $user->id : auth()->id();
             return $this->likes()->where('user_id', $user->id)->updateOrCreate(compact('user_id'), compact('liked'));

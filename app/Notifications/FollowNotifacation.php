@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\NexmoMessage;
 
-class FollowNotifacation extends Notification
+class FollowNotifacation extends Notification implements ShouldQueue
 {
     use Queueable;
     public $from;
@@ -30,7 +30,7 @@ class FollowNotifacation extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**

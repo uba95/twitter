@@ -1,6 +1,7 @@
 <?php 
 namespace App\Models;
 
+use App\Jobs\FollowNotificationsJob;
 use App\Notifications\FollowNotifacation;
 
 trait Followable {
@@ -17,7 +18,6 @@ trait Followable {
 
     public function follow(User $user) {
 
-        $user->notify(new FollowNotifacation($this));
         return $this->follows()->syncWithoutDetaching($user);
     }
 
@@ -37,8 +37,8 @@ trait Followable {
         $this->follows()->toggle($user);
 
         if ($this->isFollowing($user)) {
-
-            $user->notify(new FollowNotifacation($this));
+            // from $this to $user
+            FollowNotificationsJob::dispatch($user);
         } 
 
     }

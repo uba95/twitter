@@ -7,8 +7,9 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\NexmoMessage;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class LikeNotifacation extends Notification
+class LikeNotifacation extends Notification implements ShouldQueue
 {
     use Queueable;
     public $from;
@@ -32,7 +33,7 @@ class LikeNotifacation extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -76,4 +77,19 @@ class LikeNotifacation extends Notification
             // 'tweet' => $this->tweet->id,            
         ];
     }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'id' => $notifiable->id,
+            'count' => $notifiable->unreadNotifications->count(),
+        ]);
+    }
+    
 }

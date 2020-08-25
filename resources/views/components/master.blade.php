@@ -227,6 +227,11 @@ $.ajax({
     
         {{ $slot }}
     </div>
+    {{-- @if (Auth::check())
+        <script>
+            var userId = {{current_user()->id}}
+        </script>
+    @endif --}}
 <script>
 
 Pusher.logToConsole = true;
@@ -238,11 +243,18 @@ var channel = pusher.subscribe('like-event');
 channel.bind('App\\Events\\LikeEvent', function (data) {
 
     var notificationsCountElem = $(`*[data-count='${data.id}']`);
-    
-    notificationsCountElem.text(data.count);
+    var count = data.count;
+    count++;
+    notificationsCountElem.text(count);
     notificationsCountElem.text() == 0 ? '' :  notificationsCountElem.show();
 
 });
+
+
+// Echo.channel(`like-event`)
+// .listen('App\\Events\\LikeEvent', (e) => {
+//         console.log(e);
+//     });
 
 </script>
 

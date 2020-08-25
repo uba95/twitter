@@ -9,6 +9,18 @@ require('./bootstrap');
 window.jscroll = require('jscroll');
 // var Turbolinks = require("turbolinks")
 // Turbolinks.start()
+
+// import Echo from "laravel-echo";
+// const client = require('pusher-js');
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: '1853c172efa24b620d3e',
+//     cluster: 'eu',
+//     forceTLS: true,
+//     client: client
+// });
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
