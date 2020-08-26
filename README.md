@@ -1,6 +1,6 @@
 ## Twitter Clone
 
-Visit [htweet.herokuapp.com](htweet.herokuapp.com)
+#### Visit [htweet](http://htweet.herokuapp.com)
 
 - Laravel 7
 - Mysql
