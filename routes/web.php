@@ -68,7 +68,7 @@ Route::group(
 
         Route::get('/redirect/{service}', 'SocialController@redirect');
         Route::get('/callback/{service}', 'SocialController@callback');
-        // Auth::loginUsingId(1);
+        Auth::loginUsingId(1);
 
 
 });
