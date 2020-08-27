@@ -15,7 +15,7 @@ class AddMobileAndExpireToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('mobile')->nullable();
-            $table->boolean('expire');
+            $table->boolean('expire')->default(0);
         });
     }
 
