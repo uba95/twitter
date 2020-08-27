@@ -9,6 +9,8 @@ class Tweet extends Model
 {
     use Likeable;
 
+    protected $table = 'tweets';
+
     protected $guarded = [];
 
     public function user() {
