@@ -21,11 +21,11 @@ class LikeEvent implements ShouldBroadcast
      * @return void
      */
     public $count;
-    public $id;
+    public $user_id;
     public function __construct($user)
     {
         $this->count = $user->unreadNotifications->count();
-        $this->id = $user->id;
+        $this->user_id = $user->id;
     }
 
     /**
@@ -35,7 +35,7 @@ class LikeEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['like-event'];
+        return ['like-channel'];
 
     }
 }

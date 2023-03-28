@@ -68,7 +68,9 @@ Route::group(
 
         Route::get('/redirect/{service}', 'SocialController@redirect');
         Route::get('/callback/{service}', 'SocialController@callback');
-        Auth::loginUsingId(1);
+        // Auth::loginUsingId(1);
 
 
 });
+Route::post('/save-device-token','FollowController@saveToken');
+// Route::post('/sendPush','FirebaseController@sendPush')->name('send-push');

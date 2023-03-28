@@ -23,7 +23,9 @@
                     z-index="2" data-toggle="tooltip" data-placement="bottom" title="Change Cover">
                     @error('cover')
                         @php
-                            function alert($msg) { echo "<script type='text/javascript'>alert('Error :  $msg');</script>"; }
+                            function alert($message) { 
+                                echo "<script type='text/javascript'>Swal.fire('Error!', `$message`, 'error')</script>"; 
+                            }
                             alert($message);
                         @endphp
                     @enderror

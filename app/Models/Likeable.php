@@ -16,33 +16,22 @@ trait Likeable {
 
     public function like($user = null , $liked = true) {
 
-        if ($this->isLikedBy($user)) {
+        $user_id = $user ? $user->id : auth()->id();
+
+        if ($liked && $this->isLikedBy($user) || !$liked && $this->isDisLikedBy($user)) {
             
-            return $this->likes()->where('user_id', $user->id)->delete() ; 
+            return $this->likes()->where('user_id', $user_id)->delete() ; 
+        } 
+        $this->likes()->updateOrCreate(compact('user_id'), compact('liked'));
 
-        } else {
-
-            if ($liked) {
-                
-                // from $user to $this->user 
-                LikeNotifacationJob::dispatch($this->user);
-            } 
-            $user_id = $user ? $user->id : auth()->id();
-            return $this->likes()->where('user_id', $user->id)->updateOrCreate(compact('user_id'), compact('liked'));
-        }
+        // from $user to $this->user 
+        $liked ? LikeNotifacationJob::dispatch($this->user) : '';
 
     }
     
     public function dislike($user = null, $liked = false) {
 
-        // return $this->like($user, false);
-        $user_id = $user ? $user->id : auth()->id();
-
-        if ($this->isDisLikedBy($user)) {
-            return $this->likes()->where('user_id', $user->id)->delete() ; 
-        }
-
-        return $this->likes()->updateOrCreate(compact('user_id'), compact('liked'));
+        return $this->like($user, $liked);
 
     }
 

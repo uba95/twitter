@@ -34,6 +34,6 @@ class LikeNotifacationJob implements ShouldQueue
     public function handle()
     {
         $this->user->notify(new LikeNotifacation(current_user()));
-        LikeEvent::dispatch($this->user);
+        // LikeEvent::dispatch($this->user);
     }
 }

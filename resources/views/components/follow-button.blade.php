@@ -20,25 +20,12 @@
              __('messages.Unfollow') :
              __('messages.Follow') }}
         </button>
+
+        <input type="hidden" name="id" class="not-userid" value="{{$user->id}}" />
+
     </form>
     
     @endunless
     @else
     <a href="/login" class="btn btn-primary btn-lg">Follow</a>
 @endif
-
-<x-slot name="toast">
-    <div class="toasts" style="position: fixed; bottom: -80px; right: 10px;z-index:99">
-        <div class="toast bg-dark" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
-            <div class="toast-header">
-                <strong class="mr-auto">Twitter</strong>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="toast-body text-light">        
-            <span class="msg">You Started Following</span><strong class="username">username</strong>
-            </div>
-        </div>    
-    </div>
-</x-slot>

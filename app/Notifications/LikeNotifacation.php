@@ -33,7 +33,7 @@ class LikeNotifacation extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database', 'mail', 'broadcast'];
     }
 
     /**
@@ -87,7 +87,8 @@ class LikeNotifacation extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'id' => $notifiable->id,
+            'user_id' => $notifiable->id,
+            'name' => $this->from->name,
             'count' => $notifiable->unreadNotifications->count(),
         ]);
     }

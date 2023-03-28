@@ -120,6 +120,8 @@ return [
     */
 
     'key' => env('APP_KEY'),
+    
+    'firebase_server_key' => env('FIREBASE_SERVER_KEY'),
 
     'cipher' => 'AES-256-CBC',
 

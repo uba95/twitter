@@ -6,7 +6,7 @@
                 <div class="row align-items-center mx-0">
                     <a href="{{ route('profile', $user) }}"
                         class="col-lg-2 text-decoration-none text-dark rounded-circle" 
-                        style="width:40px; height:40px;background-image: url({{ $user->avatar }});background-size: cover;"> 
+                        style="height:calc(-1.5vw + 65px);background-image: url({{ $user->avatar }});background-size: cover;"> 
                     </a>
                     <div class="col-lg-6">
                         <a href="{{ route('profile', $user) }}"
